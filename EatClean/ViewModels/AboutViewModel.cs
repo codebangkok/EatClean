@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using System.Linq;
 using System.Diagnostics;
 using EatClean.Views;
+using Plugin.Media.Abstractions;
 
 namespace EatClean.ViewModels
 {
@@ -16,6 +17,7 @@ namespace EatClean.ViewModels
     {
         public StoryService StoryService => DependencyService.Get<StoryService>();
         public LikeService LikeService => DependencyService.Get<LikeService>();
+        public UserService UserService => DependencyService.Get<UserService>();
 
         public ObservableCollection<Story> Stories { get; set; }
         public Command LoadStoriesCommand { get; set; }        
@@ -44,6 +46,12 @@ namespace EatClean.ViewModels
 
                 await LikeService.ToggleAsync(id, Services.Setting.UserId);
             });
+
+            MessagingCenter.Subscribe<AboutPage, MediaFile>(this, "ChangeProfile", async (obj, photoFile) =>
+            {
+                Services.Setting.Photo = await UserService.Update(Services.Setting.UserId, Services.Setting.Name, photoFile);
+                User.Photo = Services.Setting.Photo;
+            });
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -52,7 +60,7 @@ namespace EatClean.ViewModels
 
             try
             {
-                var stories = await StoryService.ListByProfileAsync(User.Id, true);
+                var stories = await StoryService.ListByProfileAsync(User.Id);
 
                 Stories.Clear();
                 foreach (var story in stories.OrderByDescending(s => s.Id))

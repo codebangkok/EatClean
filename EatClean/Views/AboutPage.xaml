@@ -30,10 +30,12 @@
                          VerticalOptions="Center">
                 <ContentView Padding="0,40,0,0"
                              VerticalOptions="FillAndExpand">
-                    <Image Source="{Binding User.PhotoUrl}"
-                           Aspect="AspectFit"
-                           HeightRequest="100"
-                           WidthRequest="100"/>                    
+                    <ImageButton Source="{Binding User.PhotoUrl}"
+                                 Aspect="AspectFill"
+                                 HeightRequest="100"
+                                 WidthRequest="100"
+                                 x:Name="photoButton"
+                                 Clicked="photoButton_Clicked"/>                    
                 </ContentView>
             </StackLayout>
             <Label Text="{Binding User.UserName}"

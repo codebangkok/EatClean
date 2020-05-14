@@ -30,12 +30,13 @@ namespace EatClean.MobileAppService.Controllers
         [HttpGet]
         public async Task<List<Story>> GetByLatest(string userId, string hashtag = "", int count = 20)
         {
+            var hashtags = hashtag.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             var stories = await db.Stories
                            .Include(s => s.Comments)
                            .ThenInclude(c => c.User)
                            .Include(s => s.Likes)
                            .Include(s => s.User)
-                           .Where(s => s.Hashtag.Contains(hashtag) || s.Caption.Contains(hashtag))
+                           .Where(s => s.Caption.Contains(hashtag) || hashtags.Contains(s.Hashtag))
                            .OrderByDescending(s => s.Id)
                            .Take(count)
                            .ToListAsync();

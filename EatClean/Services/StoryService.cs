@@ -24,11 +24,11 @@ namespace EatClean.Services
             stories = new List<Story>();
         }
 
-        public async Task<List<Story>> ListAsync(string hashtag = "", int count = 20, bool forceRefresh = false)
+        public async Task<List<Story>> ListAsync(string hashtag = "")
         {
-            if (forceRefresh && IsConnected)
+            if (IsConnected)
             {
-                var uri = $"api/story?count={count}&userId={Services.Setting.UserId}";
+                var uri = $"api/story?userId={Services.Setting.UserId}";
                 uri = string.IsNullOrEmpty(hashtag) ? uri : $"{uri}&hashtag={hashtag}";
                 var stream = await client.GetStreamAsync(uri);
                 stories = await JsonSerializer.DeserializeAsync<List<Story>>(stream);
@@ -37,9 +37,9 @@ namespace EatClean.Services
             return stories;
         }
 
-        public async Task<List<Story>> ListByProfileAsync(string userId, bool forceRefresh = false)
+        public async Task<List<Story>> ListByProfileAsync(string userId)
         {
-            if (forceRefresh && IsConnected)
+            if (IsConnected)
             {
                 var uri = $"api/story/{userId}";                
                 var stream = await client.GetStreamAsync(uri);
@@ -48,17 +48,6 @@ namespace EatClean.Services
 
             return stories;
         }
-
-        //public async Task<Story> GetAsync(string id)
-        //{
-        //    if (id != null && IsConnected)
-        //    {
-        //        var stream = await client.GetStreamAsync($"api/story/{id}");
-        //        return await JsonSerializer.DeserializeAsync<Story>(stream);
-        //    }
-
-        //    return null;
-        //}
 
         public async Task<string> AddAsync(string caption, string hashtag, string ingredient, string recipe, string userId, MediaFile photoFile)
         {

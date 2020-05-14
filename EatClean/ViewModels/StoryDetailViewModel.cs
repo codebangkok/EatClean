@@ -56,7 +56,7 @@ namespace EatClean.ViewModels
 
             try
             {
-                var comments = await CommentService.ListAsync(Story.Id, true);
+                var comments = await CommentService.ListAsync(Story.Id);
 
                 Comments.Clear();
                 foreach (var comment in comments.OrderBy(s => s.Id))

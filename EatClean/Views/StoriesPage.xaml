@@ -16,7 +16,21 @@
                 Command="{Binding LoadStoriesCommand}"
                 Grid.Row="1">
         <Grid>
-
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackLayout Orientation="Horizontal"
+                         Margin="10,10,10,0">
+                <Entry HorizontalOptions="FillAndExpand"
+                        Placeholder="caption or hashtag"
+                        Text="{Binding SearchText}"
+                       Keyboard="Plain"/>
+                <Button Text="Search"
+                        WidthRequest="100"
+                        BackgroundColor="Silver"
+                        Command="{Binding SearchCommand}"/>
+            </StackLayout>
             <CollectionView x:Name="ItemsCollectionView"
                             ItemsSource="{Binding Stories}"
                             Grid.Row="1">

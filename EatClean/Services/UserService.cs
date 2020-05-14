@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using EatClean.Models;
+using Plugin.Media.Abstractions;
 using Xamarin.Essentials;
 
 namespace EatClean.Services
@@ -47,6 +49,28 @@ namespace EatClean.Services
 
             var stream = await response.Content.ReadAsStreamAsync();
             return await JsonSerializer.DeserializeAsync<ApplicationUser>(stream);
+        }
+
+        public async Task<string> Update(string userId, string name, MediaFile photoFile)
+        {
+            var content = new MultipartFormDataContent();
+
+            var userIdContent = new StringContent(userId, Encoding.UTF8, "application/x-www-form-urlencoded");
+            content.Add(userIdContent, "userId");
+            var nameContent = new StringContent(name, Encoding.UTF8, "application/x-www-form-urlencoded");
+            content.Add(nameContent, "name");            
+
+            if (photoFile != null)
+            {
+                var contentFile = new StreamContent(photoFile.GetStreamWithImageRotatedForExternalStorage());
+                content.Add(contentFile, "file", photoFile.Path);
+            }
+
+            var response = await client.PutAsync($"api/user/update", content);
+
+            if (!response.IsSuccessStatusCode) throw new Exception(response.StatusCode.ToString());
+
+            return await response.Content.ReadAsStringAsync();            
         }
     }
 }

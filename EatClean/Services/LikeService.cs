@@ -22,9 +22,9 @@ namespace EatClean.Services
             likes = new List<Like>();
         }
 
-        public async Task<List<Like>> ListAsync(int storyId, bool forceRefresh = false)
+        public async Task<List<Like>> ListAsync(int storyId)
         {
-            if (forceRefresh && IsConnected)
+            if (IsConnected)
             {
                 var stream = await client.GetStreamAsync($"api/like?storyId={storyId}");
                 likes = await JsonSerializer.DeserializeAsync<List<Like>>(stream);

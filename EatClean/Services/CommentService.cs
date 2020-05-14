@@ -22,9 +22,9 @@ namespace EatClean.Services
             comments = new List<Comment>();
         }
 
-        public async Task<List<Comment>> ListAsync(int storyId, bool forceRefresh = false)
+        public async Task<List<Comment>> ListAsync(int storyId)
         {
-            if (forceRefresh && IsConnected)
+            if (IsConnected)
             {
                 var stream = await client.GetStreamAsync($"api/comment/{storyId}");
                 comments = await JsonSerializer.DeserializeAsync<List<Comment>>(stream);

@@ -77,7 +77,7 @@ namespace EatClean.MobileAppService.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update([FromForm]string userId, [FromForm]string name, [FromForm]IFormFile file)
+        public async Task<ActionResult<string>> Update([FromForm]string userId, [FromForm]string name, [FromForm]IFormFile file)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace EatClean.MobileAppService.Controllers
                 }                
                 
                 await userMan.UpdateAsync(user);
-                return Ok();
+                return user.Photo;
             }
             catch (Exception ex)
             {

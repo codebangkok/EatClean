@@ -82,11 +82,11 @@
                                 <DataTemplate>
                                     <Grid Padding="10,5,0,5">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="20"/>
+                                            <ColumnDefinition Width="30"/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <Image HeightRequest="20"
-                                                Aspect="AspectFit"
+                                        <Image HeightRequest="30"
+                                                Aspect="AspectFill"
                                                 Source="{Binding User.PhotoUrl}"/>
                                         <StackLayout Orientation="Horizontal"
                                                         Spacing="5"

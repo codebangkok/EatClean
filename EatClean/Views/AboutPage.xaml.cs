@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using EatClean.Models;
 using EatClean.ViewModels;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,6 +15,7 @@ namespace EatClean.Views
     public partial class AboutPage : ContentPage
     {
         AboutViewModel viewModel;
+        MediaFile photoFile;
 
         public AboutPage()
         {
@@ -48,6 +51,27 @@ namespace EatClean.Views
                 App.Instance.MainPage = new MainPage();
                 Services.Setting.IsLoggedIn = false;
             }
+        }
+
+        async void photoButton_Clicked(System.Object sender, System.EventArgs e)
+        {
+            photoFile = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+            {
+                Directory = "Profile",
+                Name = "profile.jpg",
+                DefaultCamera = CameraDevice.Front
+            });
+
+            if (photoFile == null)
+                return;
+
+            photoButton.Source = ImageSource.FromStream(() =>
+            {
+                var stream = photoFile.GetStream();
+                return stream;
+            });
+
+            MessagingCenter.Send(this, "ChangeProfile", photoFile);
         }
     }
 }

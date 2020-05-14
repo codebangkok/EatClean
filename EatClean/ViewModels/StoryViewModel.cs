@@ -18,13 +18,17 @@ namespace EatClean.ViewModels
         public LikeService LikeService => DependencyService.Get<LikeService>();
 
         public ObservableCollection<Story> Stories { get; set; }
-        public Command LoadStoriesCommand { get; set; }        
+        public Command LoadStoriesCommand { get; set; }
+        public Command SearchCommand { get; set; }
+
+        public string SearchText { get; set; }
 
         public StoryViewModel()
         {
             Title = "Eat Clean";
             Stories = new ObservableCollection<Story>();
             LoadStoriesCommand = new Command(async () => await ExecuteLoadStoriesCommand());
+            SearchCommand = new Command(async () => await ExecuteLoadStoriesCommand());
 
             MessagingCenter.Subscribe<NewStoryPage, Story>(this, "AddItem", async (obj, story) =>
             {
@@ -49,7 +53,7 @@ namespace EatClean.ViewModels
 
             try
             {                
-                var stories = await StoryService.ListAsync("", 20, true);
+                var stories = await StoryService.ListAsync(SearchText);
 
                 Stories.Clear();
                 foreach (var story in stories.OrderByDescending(s => s.Id))
