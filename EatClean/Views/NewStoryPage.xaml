@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EatClean.Views.NewStoryPage"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Title="New Story">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cancel"
+                     Clicked="Cancel_Clicked" />
+        <ToolbarItem Text="Save"
+                     Clicked="Save_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <ScrollView>
+            <Frame HasShadow="False"
+                   CornerRadius="20"
+                   IsClippedToBounds="True"
+                   Padding="0,0,0,15"
+                   Margin="10"
+                   VerticalOptions="Start">
+                <StackLayout>
+                    <Grid HeightRequest="300"
+                          BackgroundColor="LightGray">                                        
+                        <Image Source="camera"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                        <Image Aspect="AspectFill"
+                               x:Name="image"/>
+                        <Button Clicked="Camera_Clicked"/>
+                    </Grid>
+
+                    <Label Text="Title"
+                           Margin="10,5,10,0"
+                           Style="{DynamicResource ListItemTextStyle}"/>
+                    <Frame IsClippedToBounds="True"
+                           BorderColor="LightGray"
+                           HasShadow="False"
+                           Padding="10">
+                        <Editor HeightRequest="100"
+                                Text="{Binding Story.Caption}"/>
+                    </Frame>
+                    <Label Text="Ingredient"
+                           Margin="10,5,10,0"
+                           Style="{DynamicResource ListItemTextStyle}"/>
+                    <Frame IsClippedToBounds="True"
+                           BorderColor="LightGray"
+                           HasShadow="False"
+                           Padding="10">
+                        <Editor HeightRequest="100"
+                                Text="{Binding Story.Ingredient}"/>
+                    </Frame>
+                    <Label Text="Recipe"
+                           Margin="10,5,10,0"
+                           Style="{DynamicResource ListItemTextStyle}"/>
+                    <Frame IsClippedToBounds="True"
+                           BorderColor="LightGray"
+                           HasShadow="False"
+                           Padding="10">
+                        <Editor HeightRequest="100"
+                                Text="{Binding Story.Recipe}"/>
+                    </Frame>
+                    <Label Text="Tags"
+                           Margin="10,5,10,0"
+                           Style="{DynamicResource ListItemTextStyle}"/>
+                    <Entry Text="{Binding Story.Hashtag}"/>
+                </StackLayout>
+            </Frame>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

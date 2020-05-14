@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EatClean.Views.MainPage">
+    <Grid>
+        <Image Source="bg"
+               Aspect="Fill"/>
+
+        <ScrollView>
+            <StackLayout Padding="30,80,30,0">            
+                <Frame BorderColor="Gray"
+                       HasShadow="True"
+                       BackgroundColor="#A0000000"
+                       CornerRadius="20">
+                    <StackLayout>
+                        <Label Text="Eat Clean"
+                               TextColor="#9e5e9b"
+                               HorizontalTextAlignment="Center"
+                               FontSize="40"
+                               FontAttributes="Bold"/>
+                        <BoxView HeightRequest="1"
+                                 Color="White"
+                                 Margin="30,0,30,0"/>
+                        <Label Text="Every meal that health on you"
+                               TextColor="#9e5e9b"
+                               HorizontalTextAlignment="Center"/>
+                        <Label Text="Username"
+                              TextColor="#9e5e9b"
+                               Margin="0,30,0,0"/>
+                        <Entry Placeholder="Username"
+                               Text="{Binding LoginModel.UserName}"
+                               BackgroundColor="#A0FFFFFF"
+                               Keyboard="Plain"/>
+                        <Label Text="Password"
+                               TextColor="#9e5e9b"/>
+                        <Entry Placeholder="Password"
+                               IsPassword="True"
+                               Text="{Binding LoginModel.Password}"
+                               BackgroundColor="#A0FFFFFF"/>
+                        <Grid Margin="0,20,0,0">
+                            <Button BackgroundColor="Silver"
+                                    TextColor="Black"
+                                    Text="Sign Up"
+                                    x:Name="registerButton"
+                                    Clicked="registerButton_Clicked"/>
+                            <Button Grid.Column="1"
+                                    BackgroundColor="Green"
+                                    TextColor="White"
+                                    Text="Login"
+                                    x:Name="loginButton"
+                                    Clicked="loginButton_Clicked"/>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+
+                <Image Source="vegie"/>
+        
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

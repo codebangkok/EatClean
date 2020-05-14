@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="EatClean.Views.StoryDetailPage"
+             Title="{Binding Title}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <ScrollView>
+                <StackLayout>
+                    <Image Source="{Binding Story.PhotoUrl}"
+                            Aspect="AspectFill"
+                            HeightRequest="300"/>
+                    <StackLayout Orientation="Horizontal"
+                                    Margin="10,5,10,0">
+                        <ImageButton Source="{Binding Story.Heart}"
+                                HeightRequest="20"
+                               Clicked="OnItemLike"/>
+                        <Label Text="{Binding Story.LikeCount}"/>
+                        <Image Source="comment"
+                                HeightRequest="20"/>
+                        <Label Text="{Binding Story.CommentCount}"/>
+                        <Image Source="hashtag"
+                                HeightRequest="20"/>
+                        <Label Text="{Binding Story.Hashtag}"/>
+                    </StackLayout>
+                    <Label Text="{Binding Story.CreateDateTimeString}"
+                            Margin="10,5,10,0"
+                            Style="{DynamicResource ListItemDetailTextStyle}"/>
+
+                    <Label Text="{Binding Story.Caption}"
+                            LineBreakMode="WordWrap"
+                            Style="{DynamicResource ListItemTextStyle}"
+                            Margin="10,5,10,0"/>                
+                
+                    <Label Text="Ingredient"
+                                Margin="10,5,10,0"
+                                Style="{DynamicResource ListItemTextStyle}"/>
+                    <Frame IsClippedToBounds="True"
+                            BorderColor="LightGray"
+                            HasShadow="False"
+                            Padding="10"
+                            Margin="10,0,10,0">
+                        <Editor HeightRequest="100"
+                                Text="{Binding Story.Ingredient}"
+                                IsEnabled="False"/>
+                    </Frame>
+                    <Label Text="Recipe"
+                            Margin="10,5,10,0"
+                            Style="{DynamicResource ListItemTextStyle}"/>
+                    <Frame IsClippedToBounds="True"
+                            BorderColor="LightGray"
+                            HasShadow="False"
+                            Padding="10"
+                            Margin="10,0,10,0">
+                        <Editor HeightRequest="100"
+                                Text="{Binding Story.Recipe}"
+                                IsEnabled="False"/>
+                    </Frame>
+                    <StackLayout Orientation="Horizontal"
+                                 Grid.Row="1"
+                                 Margin="10,0,10,10">
+                        <Entry HorizontalOptions="FillAndExpand"
+                               Placeholder="Comment"
+                               Text="{Binding CommentDescription}"/>
+                        <Button Text="Comment"
+                                WidthRequest="100"
+                                BackgroundColor="Silver"
+                                Command="{Binding CommentCommand}"/>
+                    </StackLayout>
+                    <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}"
+                                    Command="{Binding LoadCommentsCommand}">
+                        <CollectionView x:Name="ItemsCollectionView"
+                                        ItemsSource="{Binding Comments}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="10,5,0,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="20"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Image HeightRequest="20"
+                                                Aspect="AspectFit"
+                                                Source="{Binding User.PhotoUrl}"/>
+                                        <StackLayout Orientation="Horizontal"
+                                                        Spacing="5"
+                                                        Grid.Column="1">
+                                            <Label Text="{Binding User.UserName}"
+                                                    FontAttributes="Bold"/>
+                                            <Label Text="{Binding Description}"/>
+                                        </StackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </RefreshView>
+                </StackLayout>
+            </ScrollView> 
+        </Grid>        
+    </Grid>
+</ContentPage>

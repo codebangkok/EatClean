@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EatClean.Views.RegisterPage"
+             Padding="50">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cancel"
+                     Clicked="Cancel_Clicked" />
+        <ToolbarItem Text="Save"
+                     Clicked="Save_Clicked" />
+    </ContentPage.ToolbarItems>    
+    <StackLayout>
+        <Label Text="Sign Up"
+               HorizontalTextAlignment="Center"/>
+        <Label Text="Username"/>
+        <Entry Placeholder="Username"
+               Keyboard="Plain"
+               Text="{Binding LoginModel.UserName}"/>
+        <Label Text="Password"/>
+        <Entry Placeholder="Password"
+               Text="{Binding LoginModel.Password}"/>
+        <Grid Margin="0,20,0,0">
+            <Button BackgroundColor="Silver"
+                    TextColor="Black"
+                    Text="Cancel"
+                    x:Name="cancelButton"
+                    Clicked="Cancel_Clicked"/>
+            <Button Grid.Column="1"
+                    BackgroundColor="Green"
+                    TextColor="White"
+                    Text="Submit"
+                    x:Name="signupButton"
+                    Clicked="Save_Clicked"/>
+        </Grid>
+    </StackLayout>
+</ContentPage>

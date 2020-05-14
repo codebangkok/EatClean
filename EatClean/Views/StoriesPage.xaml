@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="EatClean.Views.StoriesPage"
+             Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="New"
+                     Clicked="AddItem_Clicked" />
+    </ContentPage.ToolbarItems>
+
+    <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}"
+                Command="{Binding LoadStoriesCommand}"
+                Grid.Row="1">
+        <Grid>
+
+            <CollectionView x:Name="ItemsCollectionView"
+                            ItemsSource="{Binding Stories}"
+                            Grid.Row="1">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10">
+                            <Frame HasShadow="False"
+                                    CornerRadius="20"
+                                    BorderColor="LightGray"
+                                    IsClippedToBounds="True"
+                                    Padding="0,0,0,15">
+                                <StackLayout>
+                                    <Image Source="{Binding PhotoUrl}"
+                                            Aspect="AspectFill"
+                                            HeightRequest="300"/>
+                                    <StackLayout Orientation="Horizontal"
+                                                    Margin="10,5,10,0">
+                                        <ImageButton Source="{Binding Heart}"
+                                                    HeightRequest="20"
+                                                        Clicked="OnItemLike"/>
+                                        <Label Text="{Binding LikeCount}"/>
+                                        <Image Source="comment"
+                                                HeightRequest="20"/>
+                                        <Label Text="{Binding CommentCount}"/>
+                                        <Image Source="hashtag"
+                                                HeightRequest="20"/>
+                                        <Label Text="{Binding Hashtag}"/>
+                                    </StackLayout>
+                                    <Label Text="{Binding Caption}"
+                                            LineBreakMode="WordWrap"
+                                            Style="{DynamicResource ListItemTextStyle}"
+                                            Margin="10,5,10,0"/>
+                                    <Label Text="{Binding CreateDateTimeString}"
+                                            Margin="10,5,10,0"
+                                            Style="{DynamicResource ListItemDetailTextStyle}"/>
+                                    <StackLayout.GestureRecognizers>                                    
+                                        <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                                Tapped="OnItemSelected"/>
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </RefreshView>
+</ContentPage>
